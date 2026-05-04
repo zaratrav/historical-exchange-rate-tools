@@ -1,0 +1,4 @@
+body{font-family:Arial;padding:24px;max-width:1000px;margin:auto;}
+.card{border:1px solid #ddd;padding:16px;border-radius:8px;margin:12px 0;}
+input{width:100%;padding:8px;margin:6px 0;}
+button{padding:8px 12px;}

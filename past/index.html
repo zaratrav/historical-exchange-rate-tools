@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Past Currency Rate Calculator</title>
+<meta name="google-site-verification" content="PkLa_ViOo6FAHpvh8SacceMb95o9tePRdrqLNBz9X1M" />
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<h1>Past Currency Rate Calculator</h1>
+
+<input id="a" placeholder="Value A">
+<input id="b" placeholder="Value B or Date">
+
+<button onclick="calc()">Calculate</button>
+<p id="res"></p>
+
+<a href="../index.html">← Back</a>
+
+<script>
+function calc(){let a1=+a.value||0;let b1=+b.value||1;res.innerText=(a1*b1).toFixed(2);} 
+</script>
+
+</body>
+</html>
