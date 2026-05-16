@@ -1,32 +1,353 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="google-site-verification" content="uQVQvib9O00oQFIT-tXdnkU3Vh5VSFZw2b3WhCHTCns
-" />
-<title>Historical Exchange Rate Tools | Past FX Rates & Averages</title>
-<meta name="description" content="Lookup historical exchange rates, calculate averages, and compare past currency values.">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="uQVQvib9O00oQFIT-tXdnkU3Vh5VSFZw2b3WhCHTCns" />
+    <title>Historical Currency Rates Converter | Past FX Exchange Rates</title>
+    <meta name="description" content="Convert currencies at historical exchange rates. Lookup past FX rates, calculate averages, and analyze currency trends over time.">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header class="header">
+        <div class="container">
+            <h1>Historical Currency Rates Converter</h1>
+            <p class="subtitle">Look up past exchange rates and convert currencies at historical FX values</p>
+        </div>
+    </header>
 
-<h1>Historical Exchange Rate Tools</h1>
 
-<p>Analyze past currency rates, averages, and historical FX data for accurate financial decisions.</p>
+<main>
+    <section class="intro">
+        <div class="container">
+            <h2>Why Use Historical Exchange Rates?</h2>
+            <p>
+                Exchange rates fluctuate constantly. If you're reconciling past transactions, calculating historical investments, 
+                or preparing tax returns, you need accurate rates from the specific date the transaction occurred. Using current rates 
+                for historical conversions leads to inaccurate records and potential tax or accounting issues.
+            </p>
+            <p>
+                Historical currency converters let you access FX rates from any past date, ensuring your financial records are accurate 
+                and compliant with accounting standards. Popular sources include OANDA, XE.com, US Treasury, and OFX.
+            </p>
+        </div>
+    </section>
 
-<div class="card">
-<ul>
-<li><a href="lookup/index.html">Historical Rate Lookup</a></li>
-<li><a href="date/index.html">Rate on Specific Date</a></li>
-<li><a href="archive/index.html">Exchange Rate Archive</a></li>
-<li><a href="past/index.html">Past Rate Calculator</a></li>
-<li><a href="year/index.html">Rate 1 Year Ago</a></li>
-<li><a href="average/index.html">Average Rate Calculator</a></li>
-<li><a href="annual/index.html">Annual Average Rate</a></li>
-<li><a href="irs/index.html">IRS Exchange Rate</a></li>
-<li><a href="treasury/index.html">Treasury Rate Lookup</a></li>
-</ul>
-</div>
+    <section class="featured-tool">
+        <div class="container">
+            <h2>Historical Currency Rates Converter</h2>
+            <p>Convert any amount using exchange rates from a specific date in the past.</p>
+            
+            <div class="converter">
+                <div class="converter-inputs">
+                    <div class="input-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" placeholder="100" min="0" step="0.01" value="100" onchange="convertCurrency()">
+                    </div>
+                    <div class="input-group">
+                        <label for="fromCurrency">From Currency</label>
+                        <select id="fromCurrency" onchange="convertCurrency()">
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="MXN">MXN - Mexican Peso</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="toCurrency">To Currency</label>
+                        <select id="toCurrency" onchange="convertCurrency()">
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="MXN">MXN - Mexican Peso</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="conversionDate">Conversion Date</label>
+                        <input type="date" id="conversionDate" onchange="convertCurrency()">
+                    </div>
+                </div>
+
+                <div class="converter-results" id="converterResults" style="display: none;">
+                    <div class="result-display">
+                        <div class="result-item">
+                            <span class="amount-from" id="displayAmount">100</span>
+                            <span class="currency-from" id="displayFromCurrency">USD</span>
+                            <span class="equals">=</span>
+                            <span class="amount-to" id="displayAmount2">0.00</span>
+                            <span class="currency-to" id="displayToCurrency">EUR</span>
+                        </div>
+                        <div class="rate-info">
+                            <p>Exchange Rate: <strong id="exchangeRate">0.00</strong></p>
+                            <p>Date: <strong id="rateDate">-</strong></p>
+                            <p class="rate-note">*Rates are historical estimates based on major bank data</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-dates">
+                    <p class="dates-label">Quick dates:</p>
+                    <div class="date-buttons">
+                        <button class="date-btn" onclick="setHistoricalDate(1)">1 Year Ago</button>
+                        <button class="date-btn" onclick="setHistoricalDate(5)">5 Years Ago</button>
+                        <button class="date-btn" onclick="setHistoricalDate(10)">10 Years Ago</button>
+                        <button class="date-btn" onclick="setHistoricalDate(20)">20 Years Ago</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How Historical Currency Conversion Works</h2>
+            
+            <h3>What Are Historical Exchange Rates?</h3>
+            <p>
+                Exchange rates are the value of one currency relative to another. They change every second based on market demand. 
+                Historical exchange rates are the rates that were in effect on a specific past date. These rates are essential for:
+            </p>
+            <ul style="list-style-position: inside; color: var(--text-light); line-height: 1.8;">
+                <li><strong>Accounting & Tax Returns:</strong> IRS requires historical rates for foreign income calculations</li>
+                <li><strong>Investment Analysis:</strong> Comparing historical returns in different currencies</li>
+                <li><strong>Invoice Reconciliation:</strong> Verifying past payments made in foreign currencies</li>
+                <li><strong>Financial Reporting:</strong> Consolidating international subsidiary financials</li>
+                <li><strong>Legal Disputes:</strong> Establishing historical values in litigation</li>
+            </ul>
+
+            <h3>Which Rate to Use?</h3>
+            <p>
+                Different dates provide different rates:
+            </p>
+            <ul style="list-style-position: inside; color: var(--text-light); line-height: 1.8;">
+                <li><strong>Transaction Date:</strong> The date the payment was made (most common)</li>
+                <li><strong>Month-End Rate:</strong> Used for monthly financial reconciliation</li>
+                <li><strong>Annual Average:</strong> Used for annual tax reporting (some jurisdictions require this)</li>
+                <li><strong>IRS Published Rate:</strong> For US federal income tax (released daily)</li>
+                <li><strong>Treasury Rate:</strong> For US federal government transactions</li>
+            </ul>
+
+            <h3>Data Sources for Historical Rates</h3>
+            <p>
+                Accurate historical rates come from:
+            </p>
+            <ul style="list-style-position: inside; color: var(--text-light); line-height: 1.8;">
+                <li><strong>OANDA:</strong> Daily rates since 1990 for major currency pairs</li>
+                <li><strong>XE.com:</strong> Historical rates back to 1990</li>
+                <li><strong>US Treasury:</strong> Daily Treasury rates for federal purposes</li>
+                <li><strong>IRS:</strong> Daily IRS rates for tax reporting</li>
+                <li><strong>Central Banks:</strong> Official rates from Federal Reserve, ECB, etc.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="use-cases">
+        <div class="container">
+            <h2>Common Use Cases</h2>
+            
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <h3>📊 Tax Returns (FORM 8949)</h3>
+                    <p>
+                        US taxpayers with foreign income must use IRS rates to convert to USD. 
+                        The IRS publishes daily rates on their website. Using a different rate can trigger audit issues.
+                    </p>
+                </div>
+                <div class="use-case-card">
+                    <h3>💼 Business Accounting</h3>
+                    <p>
+                        Companies with international operations use month-end or transaction-date rates 
+                        to reconcile foreign subsidiary earnings in consolidated financial statements (ASC 830).
+                    </p>
+                </div>
+                <div class="use-case-card">
+                    <h3>📈 Investment Analysis</h3>
+                    <p>
+                        Analyzing returns on international investments requires historical rates to calculate 
+                        true performance net of currency fluctuations over the holding period.
+                    </p>
+                </div>
+                <div class="use-case-card">
+                    <h3>💳 Invoice Reconciliation</h3>
+                    <p>
+                        Verifying past invoices paid in foreign currencies. Using current rates creates 
+                        discrepancies. Historical rates match what was actually paid.
+                    </p>
+                </div>
+                <div class="use-case-card">
+                    <h3>⚖️ Legal & Litigation</h3>
+                    <p>
+                        Establishing historical values in legal cases (damages, settlements, disputes). 
+                        Courts often require rates from the specific transaction date.
+                    </p>
+                </div>
+                <div class="use-case-card">
+                    <h3>📋 Loan & Contract Analysis</h3>
+                    <p>
+                        Reviewing historical loan payments or long-term contracts denominated in foreign currencies. 
+                        Understanding cost evolution requires period-by-period rate analysis.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="rate-sources">
+        <div class="container">
+            <h2>Popular Historical Rate Sources</h2>
+            
+            <div class="sources-grid">
+                <div class="source-card">
+                    <h3><a href="https://www.oanda.com/" target="_blank">OANDA Historical Rates</a></h3>
+                    <p><strong>Coverage:</strong> Daily rates since 1990 for 190+ currencies</p>
+                    <p><strong>Use Case:</strong> Most accurate for general currency conversions</p>
+                    <p><strong>Limitations:</strong> Requires premium access for older rates</p>
+                </div>
+                <div class="source-card">
+                    <h3><a href="https://www.xe.com/" target="_blank">XE.com Currency Tables</a></h3>
+                    <p><strong>Coverage:</strong> Historical rates back to 1990</p>
+                    <p><strong>Use Case:</strong> Free, reliable for research and reference</p>
+                    <p><strong>Limitations:</strong> May not match official tax rates</p>
+                </div>
+                <div class="source-card">
+                    <h3><a href="https://fiscaldata.treasury.gov/" target="_blank">US Treasury Rates</a></h3>
+                    <p><strong>Coverage:</strong> Official US government rates</p>
+                    <p><strong>Use Case:</strong> Required for federal transactions</p>
+                    <p><strong>Limitations:</strong> US-focused only</p>
+                </div>
+                <div class="source-card">
+                    <h3><a href="https://fxtop.com/" target="_blank">fxtop Historical Converter</a></h3>
+                    <p><strong>Coverage:</strong> 180+ currencies, rates since 1953</p>
+                    <p><strong>Use Case:</strong> Deep historical analysis</p>
+                    <p><strong>Limitations:</strong> Interface less polished than competitors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="other-tools">
+        <div class="container">
+            <h2>Related Currency Tools</h2>
+            
+            <h3>Historical Rate Tools</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4><a href="lookup/index.html">📅 Historical Rate Lookup</a></h4>
+                    <p>Find exchange rates for any specific date in the past.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="average/index.html">📊 Average Rate Calculator</a></h4>
+                    <p>Calculate average exchange rates over a date range.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="archive/index.html">📦 Exchange Rate Archive</a></h4>
+                    <p>Browse complete historical rate data for research.</p>
+                </div>
+            </div>
+
+            <h3>Specialized Converters</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4><a href="irs/index.html">🏛️ IRS Exchange Rate Converter</a></h4>
+                    <p>Convert using official IRS daily rates for tax reporting.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="treasury/index.html">💰 Treasury Rate Lookup</a></h4>
+                    <p>Official US Treasury rates for federal transactions.</p>
+                </div>
+                <div class="card">
+                    <h4><a href="annual/index.html">📈 Annual Average Rate</a></h4>
+                    <p>Calculate year-over-year average rates for tax/accounting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faqs">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h3>What exchange rate should I use for my tax return?</h3>
+                <p>
+                    For US federal tax returns, use the IRS daily exchange rate published on the Treasury website for the transaction date. 
+                    Some taxpayers may use the month-end rate or annual average depending on their accounting method. Check IRS Publication 
+                    925 for your specific situation.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How far back can I find historical exchange rates?</h3>
+                <p>
+                    Most sources like OANDA and XE.com offer rates back to 1990. fxtop goes back to 1953. 
+                    For earlier dates, central bank archives or academic databases may be necessary, but may require research.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Do historical rates differ between sources?</h3>
+                <p>
+                    Yes, slightly. OANDA uses interbank rates, while treasury and IRS rates differ slightly. For accounting purposes, 
+                    use the official rate source required by your jurisdiction or auditor. Differences are typically 0.1-0.5%.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What's the difference between spot rate and historical rate?</h3>
+                <p>
+                    Spot rate is the current rate at this moment. Historical rate is what the rate was on a past date. 
+                    For reconciling past transactions, you MUST use the historical rate from that date, not today's spot rate.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I use credit card company rates (Visa, MasterCard) for tax purposes?</h3>
+                <p>
+                    No. Credit card rates are typically 2-3% higher than spot rates and include markup. For US tax purposes, 
+                    you must use IRS rates. For accounting, use the official rate source from your jurisdiction or central bank.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How do I handle currency conversion if the specific date has no rate?</h3>
+                <p>
+                    Weekends and holidays often have no rates. Most sources use the previous business day's rate. 
+                    Verify this with the IRS or your auditor to ensure compliance with your accounting standards.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Is this tool suitable for financial reporting?</h3>
+                <p>
+                    This tool provides estimates for research and reference. For official accounting or tax purposes, 
+                    always verify rates directly from official sources (IRS, Treasury, central banks) and consult your accountant or tax advisor.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2026 Historical Currency Rates Converter. Accurate historical FX conversion for accounting, tax, and finance.</p>
+    </div>
+</footer>
+
+<script src="app.js"></script>
+
 
 </body>
 </html>
